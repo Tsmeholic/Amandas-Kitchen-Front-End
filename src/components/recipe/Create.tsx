@@ -1,9 +1,10 @@
 import React, {useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+//import { withRouter, useHistory } from 'react-router-dom';
 
 function Create(): JSX.Element{
-    console.log("Create a recipe!")
-    let history = useHistory();
+    
+    console.log('hey we made it to create')
+  //  let history = useHistory();
     
     interface IValues {
         [key: string]: any;
@@ -27,7 +28,7 @@ function Create(): JSX.Element{
         setValues({...values, formData});
         setLoading(false);
         setTimeout(() => {
-            history.push('/');
+          //  history.push('/');
         }, 1500);
     }
 
@@ -50,7 +51,9 @@ function Create(): JSX.Element{
     const setFormValues = (formValues:IValues) => {
         setValues({...values, ...formValues})
     }
-
+    
+    
+     
     const handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
         setFormValues({ [e.currentTarget.name]: e.currentTarget.value})
@@ -61,7 +64,7 @@ function Create(): JSX.Element{
             <div className={"col-md-12 form-wrapper"}>
                 <h2> Add Recipe </h2>
                 {!submitSuccess && (
-                    <div className="alert alert-info" role="alert">
+                    <div  className="alert alert-info" role="alert">
                         Fill the form below to add a new recipe.
                     </div>
                 )}
@@ -101,4 +104,4 @@ function Create(): JSX.Element{
     );
 }
 
-export default withRouter(Create);
+export default Create;

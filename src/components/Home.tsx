@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link,  } from 'react-router-dom';
     
 function Home():JSX.Element {
-    console.log("here");
-  let history = useHistory()
+  //let history = useHistory()
   const [recipes, setRecipes] = useState<any>();
-    
+
   const deleteRecipe = async(id: string) => {
     await fetch(`$http://localhost:5000/cookbook/delete?recipes=${id}`, {
         method: "delete",
@@ -15,7 +14,7 @@ function Home():JSX.Element {
         })
     });
     _removeRecipeFromView(id);
-    history.push('/');
+   // history.push('/');
   }
     
   const _removeRecipeFromView = (id: string) => {

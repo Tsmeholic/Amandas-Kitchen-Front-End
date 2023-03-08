@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 
 function Edit(): JSX.Element {
-    let history = useHistory();
+    //let history = useHistory();
     let { recipeID } = useParams();
       
     interface IValues {
@@ -30,7 +30,7 @@ function Edit(): JSX.Element {
         setSubmitSuccess(submitSuccess);
         setLoading(false);
         setTimeout(() => {
-          history.push('/');
+       //   history.push('/');
         }, 1500);
     }
     const submitForm = async (): Promise<boolean> => {
