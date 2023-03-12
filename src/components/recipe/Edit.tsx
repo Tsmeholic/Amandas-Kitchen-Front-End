@@ -13,10 +13,12 @@ function Edit(): JSX.Element {
     const [values, setValues] = useState<IValues>([]);
     const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
     const [loading, setLoading] = useState(false);
+    let getURL = 'http://localhost:5000/cookbook/recipe/'
+    let updateURL = 'http://localhost:5000/cookbook/edit?recipeID='
       
     useEffect(() => {
       const fetchData = async (): Promise<void> => {
-        const response = await fetch(`$http://localhost:5000/cookbook/recipe/${recipeID}`);
+        const response = await fetch(getURL + recipeID);
         const json = await response.json();
         setRecipe(json)    
       }
@@ -35,7 +37,7 @@ function Edit(): JSX.Element {
     }
     const submitForm = async (): Promise<boolean> => {
         try {
-          const response = await fetch(`$http://localhost:5000/cookbook/edit?recipeID=${recipeID}`, {
+          const response = await fetch(updateURL + recipeID, {
             method: "put",
             headers: new Headers({
               "Content-Type": "application/json",
@@ -75,12 +77,12 @@ function Edit(): JSX.Element {
                             <input type="text" id="ingredients" defaultValue={recipe.ingredients} onChange={(e) => handleInputChanges(e)} name="ingredients" className="form-control" placeholder="Enter ingredients.." />
                         </div>
                         <div className="form-group col-md-12">
-                            <label htmlFor="timeToCook"> timeToCook </label>
-                            <input type="text" id="timeToCook" defaultValue={recipe.timeToCook} onChange={(e) => handleInputChanges(e)} name="timeToCook" className="form-control" placeholder="Enter time to cook.." />
+                            <label htmlFor="instructions"> Instructions </label>
+                            <input type="text" id="instructions" defaultValue={recipe.instructions} onChange={(e) => handleInputChanges(e)} name="instructions" className="form-control" placeholder="Enter instructions" />
                         </div>
                         <div className="form-group col-md-12">
-                            <label htmlFor="dateAdded"> timeToCook </label>
-                            <input type="text" id="dateAdded" defaultValue={recipe.dateAdded} onChange={(e) => handleInputChanges(e)} name="dateAdded" className="form-control" placeholder="Enter current date.."/>
+                            <label htmlFor="timeToCook"> Time To Cook </label>
+                            <input type="text" id="timeToCook" defaultValue={recipe.timeToCook} onChange={(e) => handleInputChanges(e)} name="timeToCook" className="form-control" placeholder="Enter time to cook.." />
                         </div>
                         <div className="form-group col-md-4 pull-right">
                             <button className="btn btn-success" type="submit">

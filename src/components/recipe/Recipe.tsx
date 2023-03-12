@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
     
 function Recipe() {
   let { recipeID } = useParams();
   const [recipe, setRecipe] = useState<any>({});
+
+  let url = 'http://localhost:5000/cookbook/recipe/'
     
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const response = await fetch(`$http://localhost:5000/cookbook/recipe/${recipeID}`);
+      const response = await fetch(url + recipeID);
       const json = await response.json();
       setRecipe(json);
     }
     fetchData();
+    console.log(recipe)
   }, [recipeID]);
     
     return (
@@ -29,11 +32,17 @@ function Recipe() {
                                         </span>
                                     </h3>
                                     <p className="para">
-                                        {recipe.body}
+                                        Ingredients: {recipe.ingredients}
+                                    </p>
+                                    <p className="para">
+                                        Instructions: {recipe.instructions}
+                                    </p><p className="para">
+                                        Time to cook: {recipe.timeToCook}
                                     </p>
                                 </div>
                             </div>              
                         }
+                        <Link to={`/edit/${recipe._id}`} className="btn btn-sm btn-outline-secondary">Edit Recipe </Link>
                     </div>
                 </div>
             </div>

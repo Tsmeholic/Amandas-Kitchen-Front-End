@@ -2,10 +2,6 @@ import React, {useState, useEffect } from 'react';
 //import { withRouter, useHistory } from 'react-router-dom';
 
 function Create(): JSX.Element{
-    
-    console.log('hey we made it to create')
-  //  let history = useHistory();
-    
     interface IValues {
         [key: string]: any;
     }
@@ -20,21 +16,20 @@ function Create(): JSX.Element{
         const formData = {
             recipeName: values.recipeName,
             ingredients: values.ingredients,
-            timeToCook: values.timeToCook,
-            dateAdded: values.dateAdded
+            instructions: values.instructions,
+            timeToCook: values.timeToCook
         }
         const submitSuccess: boolean = await submitform(formData);
         setSubmitSuccess(submitSuccess);
         setValues({...values, formData});
         setLoading(false);
-        setTimeout(() => {
-          //  history.push('/');
-        }, 1500);
     }
+    
+    let url='http://127.0.0.1:5000/cookbook/addrecipe'
 
     const submitform = async (formData: {}) => {
         try {
-            const response = await fetch(`$http://localhost:5000/cookbook/recipe`, {
+            const response = await fetch(url, {
                 method: "post",
                 headers: new Headers({
                     "Content-type": "application/json",
@@ -42,6 +37,7 @@ function Create(): JSX.Element{
                 }),
                 body:JSON.stringify(formData)
             });
+            console.log({response});
             return response.ok;
         } catch (ex) {
             return false;
@@ -63,11 +59,11 @@ function Create(): JSX.Element{
         <div>
             <div className={"col-md-12 form-wrapper"}>
                 <h2> Add Recipe </h2>
-                {!submitSuccess && (
+                {/* {!submitSuccess && (
                     <div  className="alert alert-info" role="alert">
                         Fill the form below to add a new recipe.
                     </div>
-                )}
+                )} */}
                 {submitSuccess && (
                     <div className="alert alert-info" role="alert">
                         The form was successfully submitted!
@@ -87,12 +83,12 @@ function Create(): JSX.Element{
                         <input type="text" id="timeToCook" onChange={(e) => handleInputChanges(e)} name="timeToCook" className="form-control" placeholder="Enter time to cook.." />
                     </div>
                     <div className="form-group col-md-12">
-                        <label htmlFor="dateAdded"> Date added </label>
-                        <input type="text" id="dateAdded" onChange={(e) => handleInputChanges(e)} name="dateAdded" className="form-control" placeholder="Enter the current date.." />
+                        <label htmlFor="dateAdded"> Instructions </label>
+                        <input type="text" id="instructions" onChange={(e) => handleInputChanges(e)} name="instructions" className="form-control" placeholder="Enter the instructions.." />
                     </div>
                     <div className="form-group col-md-4 pull-right">
                         <button className="btn btn-success" type="submit">
-                            Edit Recipe
+                            Create Recipe!
                         </button>
                         {loading &&
                             <span className="fa fa-circle-o-notch fa-spin" />

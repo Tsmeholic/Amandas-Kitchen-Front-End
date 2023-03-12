@@ -2,34 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Link,  } from 'react-router-dom';
     
 function Home():JSX.Element {
-  //let history = useHistory()
-  const [recipes, setRecipes] = useState<any>();
+    const [recipes, setRecipes] = useState<any>([]);
+    let getURL = 'http://localhost:5000/cookbook/recipes'
+    let deleteURL = 'http://localhost:5000/cookbook/delete?recipeID='
+  
+    const deleteRecipe = async(id: string) => {
+      await fetch(deleteURL + id, {
+          method: "delete",
+          headers: new Headers({
+              "Content-Type": "application/json",
+              Accept: "application/json",
+          })
+      }).then(response => response.json);
+      fetchRecipes();
+    }
 
-  const deleteRecipe = async(id: string) => {
-    await fetch(`$http://localhost:5000/cookbook/delete?recipes=${id}`, {
-        method: "delete",
-        headers: new Headers({
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        })
-    });
-    _removeRecipeFromView(id);
-   // history.push('/');
-  }
-    
-  const _removeRecipeFromView = (id: string) => {
-        const index = recipes.findIndex((recipes: { _id: string; }) => recipes._id === id);
-        recipes.splice(index, 1);
-  }
-    
-  useEffect(() => {
-    const fetchRecipes = async (): Promise<any> => {
-        const response = await fetch(`$http://localhost:5000/blog/recipes`);
+    const fetchRecipes = async () => {
+        const response = await fetch(getURL);
         const json = await response.json();
+        console.log(json)
         setRecipes(json)
     }
+    
+  useEffect(() => {
     fetchRecipes();
   }, [])
+
     return (
         <section className="blog-area section">
             <div className="container">
