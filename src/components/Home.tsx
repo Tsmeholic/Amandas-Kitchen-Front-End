@@ -3,7 +3,7 @@ import { Link,  } from 'react-router-dom';
     
 function Home():JSX.Element {
     const [recipes, setRecipes] = useState<any>([]);
-    let getURL = 'http://localhost:5000/cookbook/recipes'
+    let getURL = 'https://amandas-kitchen-back-end-d3jf7zhbfq-uc.a.run.app'
     let deleteURL = 'http://localhost:5000/cookbook/delete?recipeID='
   
     const deleteRecipe = async(id: string) => {
